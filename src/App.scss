@@ -1,0 +1,65 @@
+$primary-green: #dbc602;
+$hover-green: #ffe600;
+$btn-color: #fff;
+$default-spacing: 5px;
+
+
+html,
+body, #main {
+  height: 100%;
+  margin: 0;
+}
+
+@mixin button-variant($primary, $hover, $color) {
+    background-color: $primary;
+    border-color: $primary;
+    color: $color;
+    &:hover {
+        background-color: $hover;
+        border-color: $hover;
+        color: $color;
+    }
+}
+ 
+.btn-primary {
+  @include button-variant($primary-green, $hover-green, $btn-color);
+}
+
+.modal-dialog{
+  .modal-content {
+    background-color: $primary-green;
+    .modal-body{
+      justify-content: center;
+      display: flex;
+    }
+  }
+}
+
+.table {
+  thead {
+      th {
+        vertical-align: baseline;
+        .actions {
+          display: flex;
+          justify-content: flex-end;
+          Button {
+            margin-left: $default-spacing;
+            margin-right: $default-spacing;
+          }
+        }
+      }
+  }
+  td {
+      .actions {
+        display: flex;
+        justify-content: flex-end;
+        Button {
+          margin-left: $default-spacing;
+          margin-right: $default-spacing;
+        }
+      }
+      .extra-padding{
+        margin-top: 10px;
+      }
+  }
+}
