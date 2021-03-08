@@ -40,7 +40,7 @@ const PublicRoute = ({ ...rest }) => (
 
 const App = () => {
   return (<div id="main">
-    <Navbar>
+    {/* <Navbar>
       <Navbar.Brand href="/">
         <img
           alt=""
@@ -50,7 +50,7 @@ const App = () => {
           className="d-inline-block align-top"
         />
       </Navbar.Brand>
-    </Navbar>
+    </Navbar> */}
    <Router>
      <PublicRoute default path="default" Component={Default} />
    </Router>

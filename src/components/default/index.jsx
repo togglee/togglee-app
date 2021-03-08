@@ -13,12 +13,10 @@ const DefaultPage = ({ finishedLoading }) => {
   useEffect(finishedLoading ,[finishedLoading]);
   return (<Provider>
     <Hero
-      color="black"
-      bg="white"
-      backgroundImage="https://source.unsplash.com/jxaj-UrzQbc/1600x900"
+      backgroundImage="switch.jpg"
     >
-        <Heading>Name of your app</Heading>
-        <Subhead>a couple more words</Subhead>
+        <Heading>Toggle</Heading>
+        <Subhead>simple feature toggles</Subhead>
         <CallToAction href="/getting-started" mt={3}>Get Started</CallToAction>
         <ScrollDownIndicator/>
     </Hero>
