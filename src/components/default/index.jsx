@@ -3,22 +3,28 @@ import { useEffect } from "react"
 import "./index.scss"
 import { Provider, Heading, Subhead } from 'rebass'
 import {
-  Hero, CallToAction, ScrollDownIndicator
+  Hero, CallToAction
 } from 'react-landing-page'
+import { useNavigate } from "@reach/router"
+import { github } from "../../helpers/github"
 
-const TOGGLE_TYPES = ["release", "context"]
-const OPERATIONS_TYPES = ["eq", "ne", "gt", "ge", "lt", "le"]
 
 const DefaultPage = ({ finishedLoading }) => {
+  const navigate = useNavigate()
   useEffect(finishedLoading ,[finishedLoading]);
+  const connect = () => {
+    github
+      .connect()
+      .then(({ authId }) => {
+        navigate("editor", {state: {authId}})
+      })
+      .catch(console.error);
+  };
   return (<Provider>
-    <Hero
-      backgroundImage="switch.jpg"
-    >
-        <Heading>Toggle</Heading>
-        <Subhead>simple feature toggles</Subhead>
-        <CallToAction href="/getting-started" mt={3}>Get Started</CallToAction>
-        <ScrollDownIndicator/>
+    <Hero>
+        <Heading>Togglee</Heading>
+        <Subhead>Online Editor For Gist Based Toggles</Subhead>
+        <CallToAction onClick={() => connect()} mt={3}>Login With Github</CallToAction>
     </Hero>
     </Provider>)
 }

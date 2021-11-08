@@ -6,11 +6,22 @@ import { v4 as uuid } from 'uuid'
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import ReactJson from 'react-json-view'
 import "./index.scss"
+import { github } from "../../helpers/github"
 
 const TOGGLE_TYPES = ["release", "context"]
 const OPERATIONS_TYPES = ["eq", "ne", "gt", "ge", "lt", "le"]
 
-const DefaultPage = ({ finishedLoading }) => {
+const DefaultPage = ({ finishedLoading, location }) => {
+  const [usersOrgs, setUsersOrgs] = useState([]);
+  const getUserOrgs = async(authId) => {
+      const orgs = await github
+        .auth(authId)
+        .get("/user/orgs")
+        // .get("/users/ClimatePartner/gists")
+        .then((response) => response.json())
+        .then((json) => setUsersOrgs(json.map(org => ({name: org.login, id: org.id}))));
+  }
+  useEffect(() => getUserOrgs(location.state.authId) ,[]);
   useEffect(finishedLoading ,[finishedLoading]);
   const [data,setData] = useState({
       toggles:[]
@@ -41,6 +52,17 @@ const DefaultPage = ({ finishedLoading }) => {
   const updateCondition = async (toggleIndex, conditions, index, value) =>
     updateToggle(toggleIndex, "conditions", conditions.map((condition, indexToChange) => index === indexToChange ? value : condition))
   return (<>
+    <Form.Control 
+        as="select"
+        // onChange={event => updateToggle(index,"type", event.target.value)}
+        // value={toggle.type} 
+        required>
+    {
+        usersOrgs.map(org => 
+            <option key={`userOrgs${uuid()}`}>{org.name}</option>
+        )
+    }
+    </Form.Control>
     <Table striped hover size="sm" data-testid="main-table">
         <thead>
             <tr>
@@ -115,7 +137,7 @@ const DefaultPage = ({ finishedLoading }) => {
           }
         </tbody>
     </Table>
-    <ReactJson src={processData} name={false} />
+    {/* <ReactJson src={processData} name={false} /> */}
   </>)
 }
 

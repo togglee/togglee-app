@@ -1,7 +1,8 @@
 import React from "react";
-import { Router, navigate } from "@reach/router";
+import { Router, navigate, Redirect } from "@reach/router";
 import {Navbar, Modal} from "react-bootstrap";
 import { Default } from "./components/default/index.jsx"
+import { Default as Generator } from "./components/generator/index.jsx"
 import { useState } from 'react'
 import { Grid } from 'svg-loaders-react'
 import './App.scss'
@@ -38,9 +39,15 @@ const PublicRoute = ({ ...rest }) => (
   <Loading {...rest} />
 );
 
+const PrivateRoute = ({ ...rest }) =>
+  rest.location.state && rest.location.state.authId 
+    ? (<Loading {...rest} />) 
+    : (<Redirect to="/" replace={true} noThrow={true} />)
+;
+
 const App = () => {
   return (<div id="main">
-    {/* <Navbar>
+    <Navbar>
       <Navbar.Brand href="/">
         <img
           alt=""
@@ -50,9 +57,10 @@ const App = () => {
           className="d-inline-block align-top"
         />
       </Navbar.Brand>
-    </Navbar> */}
+    </Navbar>
    <Router>
-     <PublicRoute default path="default" Component={Default} />
+     <PublicRoute default path="/" Component={Default} />
+     <PrivateRoute path="editor" Component={Generator} />
    </Router>
  </div>)
  };
