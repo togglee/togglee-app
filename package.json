@@ -20,7 +20,7 @@
     "enzyme": "3.11.0",
     "faker": "5.3.1",
     "jest-enzyme": "7.1.2",
-    "node-sass": "5.0.0",
+    "node-sass": "7.0.0",
     "react": "17.0.1",
     "react-bootstrap": "1.4.3",
     "react-dom": "17.0.1",
